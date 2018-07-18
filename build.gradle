@@ -2,6 +2,8 @@ buildscript {
 	ext {   //配置动态属性（变量）
 		springBootVersion = '2.0.2.RELEASE'
 	}
+	ext['hibernate.version'] = '5.2.8.Final'	// 自定义  Hibernate 的版本
+
 	repositories {
         // 添加 aliyun 的 maven 仓库
 		maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
@@ -30,10 +32,27 @@ repositories {
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
-	compile('org.springframework.boot:spring-boot-starter-aop')
-	compile('org.springframework.boot:spring-boot-starter-cache')
+//	compile('org.springframework.boot:spring-boot-starter-aop')
+//	compile('org.springframework.boot:spring-boot-starter-cache')
 	compile('org.springframework.boot:spring-boot-starter-security')
-	compileOnly('org.projectlombok:lombok')
+
+    // 添加 Thymeleaf 和 Thymeleaf Layout Dialect 的依赖
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.0.2.RELEASE'
+    // Thymeleaf 布局模板
+    compile group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.2.2'
+	compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.2.RELEASE'
+
+	// 添加 Spring Boot 开发工具依赖 （spring-boot-devtools 用于代码热部署）
+	// 加入spring-boot-devtools依赖后，classpath下代码修改后一般在5秒之内就会自动重新加载至服务器，相当于restart
+    compile("org.springframework.boot:spring-boot-devtools")
+
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.0.2.RELEASE'
+	compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.6'
+
+	// Apache Commons Lang
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+
+    compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')
 }

@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+spring:
+  # Thymeleaf
+  thymeleaf:
+    encoding: UTF-8
+    cache: false      # 热部署静态文件
+    mode: HTML5       # 使用HTML5标准
+
+  # DataSource
+  datasource:
+    url: jdbc:mysql://localhost/ssh_blog?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: 112358
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # JPA
+  jpa:
+    show-sql: true            #控制台是否显示sql语句
+    hibernate:
+      ddl-auto: update        #没有表新建，有表更新操作
+#      ddl-auto: create-drop   #服务器重启后会自动将之前保存的数据全部删除掉，用于开发（！部署时这里需要修改）
