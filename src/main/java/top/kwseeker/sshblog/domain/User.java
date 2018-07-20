@@ -5,6 +5,8 @@ package top.kwseeker.sshblog.domain;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -52,6 +54,7 @@ public class User implements UserDetails, Serializable {
     @Column(length = 200)
     private String avatar;
 
+    //此用户拥有的角色权限列表
     @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
@@ -68,6 +71,7 @@ public class User implements UserDetails, Serializable {
         this.password = password;
     }
 
+    //返回SimpleGrantedAuthority类型的权限列表
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<>();
@@ -75,6 +79,12 @@ public class User implements UserDetails, Serializable {
             simpleGrantedAuthorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
         }
         return simpleGrantedAuthorities;
+    }
+
+    //BCrypt加密密码
+    public void setEncodePassword(String password) {
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        this.password = encoder.encode(password);
     }
 
     @Override

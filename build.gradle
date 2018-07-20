@@ -52,6 +52,10 @@ dependencies {
 	// Apache Commons Lang
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
 
+	// 添加 Swagger 自动生成API文档
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
     compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')

@@ -26,6 +26,7 @@ public class Authority implements GrantedAuthority {
         this.name = name;
     }
 
+    //授予一个对象的权限（类似"ROLE_ADMIN"/"ROLE_USER"这种字符串）
     //GrantedAuthority的方法
     @Override
     public String getAuthority() {
