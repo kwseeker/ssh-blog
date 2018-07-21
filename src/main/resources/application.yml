@@ -1,5 +1,6 @@
 server:
   port: 8080
+debug: true
 
 spring:
   # Thymeleaf
@@ -21,3 +22,9 @@ spring:
     hibernate:
       ddl-auto: update        #没有表新建，有表更新操作
 #      ddl-auto: create-drop   #服务器重启后会自动将之前保存的数据全部删除掉，用于开发（！部署时这里需要修改）
+
+  # ElasticSearch
+  # TODO: ES的所有的配置项、作用及使用方法
+  data:
+    elasticsearch:
+      cluster-nodes: localhost:9300   #默认就是9300,不写也一样

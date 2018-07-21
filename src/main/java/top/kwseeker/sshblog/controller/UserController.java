@@ -64,7 +64,7 @@ public class UserController {
 		 	@RequestParam(value = "name", required = false, defaultValue = "") String name,
 		 	Model model) {
 
-		logger.info("Request: /users Param: async={1} pageIndex={2} pageSize={3} name={4}", async, pageIndex, pageSize, name);
+		logger.info("Request: /users Param: async={} pageIndex={} pageSize={} name={}", async, pageIndex, pageSize, name);
 
 		Pageable pageable = new PageRequest(pageIndex, pageSize);
 		Page<User> page = userService.listUsersByNameLike(name, pageable);

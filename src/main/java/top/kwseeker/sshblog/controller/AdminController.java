@@ -35,6 +35,8 @@ public class AdminController {
 		list.add(new Menu("博客管理", "/blogs"));
 		list.add(new Menu("评论管理", "/commits"));
 		model.addAttribute("list", list);
+
+		//TODO: 跟下代码看看是哪个ViewResolver处理ModelAndView的以及怎么处理的？
 		return new ModelAndView("/admins/index", "model", model);
 	}
 

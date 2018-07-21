@@ -189,12 +189,12 @@ public class Blog implements Serializable {
         this.user = user;
     }
 
-    public Timestamp getTimestamp() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
-        this.createTime = timestamp;
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
     }
 
     public Integer getReadSize() {

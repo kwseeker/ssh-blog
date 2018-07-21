@@ -56,6 +56,9 @@ dependencies {
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 
+	// 添加  Spring Data Elasticsearch 的依赖，感觉好像会自动选择版本号
+	compile('org.springframework.boot:spring-boot-starter-data-elasticsearch')
+
     compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')

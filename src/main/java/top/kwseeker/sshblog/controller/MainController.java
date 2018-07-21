@@ -69,7 +69,7 @@ public class MainController {
 	}
 
 	@GetMapping("/search")
-	@ApiOperation(value = "")
+	@ApiOperation(value = "用户查询")
 	public String search() {
 		return "search";
 	}
