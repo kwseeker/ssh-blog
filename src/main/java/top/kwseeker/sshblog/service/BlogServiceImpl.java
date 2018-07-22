@@ -39,15 +39,16 @@ public class BlogServiceImpl implements BlogService {
     }
 
     //根据用户名进行分页模糊查询（最新文章）
-//    @Override
-//    public Page<Blog> listBlogsByTitleVote(User user, String title, Pageable pageable) {
-//        // 模糊查询
-//        title = "%" + title + "%";
-//        //Page<Blog> blogs = blogRepository.findByUserAndTitleLikeOrderByCreateTimeDesc(user, title, pageable);
-//        String tags = title;
-//        Page<Blog> blogs = blogRepository.findByTitleLikeAndUserOrTagsLikeAndUserOrderByCreateTimeDesc(title,user, tags, user, pageable);
-//        return blogs;
-//    }
+    @Override
+    public Page<Blog> listBlogsByTitleVote(User user, String title, Pageable pageable) {
+        // 模糊查询
+        title = "%" + title + "%";
+        //Page<Blog> blogs = blogRepository.findByUserAndTitleLikeOrderByCreateTimeDesc(user, title, pageable);
+        String tags = title;
+        // 查询用户为 user, 标题类似 title 或 标签类似 tags
+        Page<Blog> blogs = blogRepository.findByTitleLikeAndUserOrTagsLikeAndUserOrderByCreateTimeDesc(title, user, tags, user, pageable);
+        return blogs;
+    }
 
     //根据用户名进行分页模糊查询（最热文章）
     @Override

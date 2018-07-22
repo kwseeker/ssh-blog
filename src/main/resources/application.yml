@@ -16,7 +16,7 @@ spring:
     password: 112358
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-  # JPA
+  # JPA （@Entity表示使用JPA作为Repository接口代理实例）
   jpa:
     show-sql: true            #控制台是否显示sql语句
     hibernate:
@@ -27,4 +27,4 @@ spring:
   # TODO: ES的所有的配置项、作用及使用方法
   data:
     elasticsearch:
-      cluster-nodes: localhost:9300   #默认就是9300,不写也一样
+      cluster-nodes: localhost:9300   #默认9300是tcp通讯端口，9200是http协议的RESTful接口

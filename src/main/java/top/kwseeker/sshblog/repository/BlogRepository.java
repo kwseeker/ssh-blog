@@ -14,8 +14,8 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
 
     Page<Blog> findByUserAndTitleLike(User user, String title, Pageable pageable);
 
-//    Page<Blog> findByTitleLikeAndUserOrTagsLikeAndUserOrderByCreateTimeDesc(
-//            String title,User user,String tags,User user2,Pageable pageable);
+    Page<Blog> findByTitleLikeAndUserOrTagsLikeAndUserOrderByCreateTimeDesc(
+            String title,User user,String tags,User user2,Pageable pageable);
 
     Page<Blog> findByCatalog(Catalog catalog, Pageable pageable);
 }

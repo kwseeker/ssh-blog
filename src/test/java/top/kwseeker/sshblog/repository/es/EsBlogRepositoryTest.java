@@ -3,13 +3,20 @@ package top.kwseeker.sshblog.repository.es;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import top.kwseeker.sshblog.domain.es.EsBlog;
+import top.kwseeker.sshblog.util.es.EsQueryForList;
+import top.kwseeker.sshblog.util.es.EsQueryForListImpl;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -17,11 +24,18 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 public class EsBlogRepositoryTest {
 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private EsBlogRepository esBlogRepository;
 
+    @Autowired
+    private ElasticsearchTemplate elasticsearchTemplate;
+
     @Before
     public void initRepositoryData() {
+        logger.info("初始化仓库数据");
+
         esBlogRepository.deleteAll();
         esBlogRepository.save(new EsBlog("1","老卫跟你谈谈安装 Elasticsearch",
                 "关于如何来安装 Elasticsearch，这个请看我的博客 https://waylau.com"));
@@ -42,7 +56,7 @@ public class EsBlogRepositoryTest {
     public void findDistinctEsBlogByTitleContainingOrSummaryContainingOrContentContaining() {   //或（并集）
         Pageable pageable = new PageRequest(0, 20);
         String title = "2";
-        String summary = "老卫";
+        String summary = "谈";
         String content = "Elasticsearch";
         Page<EsBlog> page = esBlogRepository.findDistinctEsBlogByTitleContainingOrSummaryContainingOrContentContaining(
                 title, summary, content, pageable);
@@ -52,15 +66,27 @@ public class EsBlogRepositoryTest {
     @Test
     public void findDistinctEsBlogByTitleContainingAndSummaryContainingAndContentContaining() {  //与（交集）
         Pageable pageable = new PageRequest(0, 20);
-        String title = "2";
-        String summary = "老卫";
-        String content = "Elasticsearch";
-        Page<EsBlog> page = esBlogRepository.findDistinctEsBlogByTitleContainingAndSummaryContainingAndContentContaining(
-                title, summary, content, pageable);
-        assertEquals(1L, page.getTotalElements());
+        String summary = "卫";
+        String content = "博";
+        Page<EsBlog> page = esBlogRepository.findDistinctEsBlogBySummaryContainingAndContentContaining(
+                summary, content, pageable);
+        assertEquals(3L, page.getTotalElements());
     }
 
     @Test
-    public void findByBlogId() {
+    public void matchPhraseTest() {
+        Pageable pageable = new PageRequest(0, 2);
+        Pageable pageable1 = new PageRequest(1, 2);
+        String key = "summary";
+        String value = "老卫";
+//        String summary = "老卫";
+//        SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(
+//                matchPhraseQuery("summary", summary)).withPageable(pageable).build();
+//        List<EsBlog> esBlogList = elasticsearchTemplate.queryForList(searchQuery, EsBlog.class);
+        EsQueryForList esQueryForList = new EsQueryForListImpl();
+        List<EsBlog> esBlogList = esQueryForList.executeSearchQuery(elasticsearchTemplate, key, value, pageable, EsBlog.class);
+        assertEquals(2L, esBlogList.size());
+        List<EsBlog> esBlogList1 = esQueryForList.executeSearchQuery(elasticsearchTemplate, key, value, pageable1, EsBlog.class);
+        assertEquals(1L, esBlogList1.size());
     }
 }

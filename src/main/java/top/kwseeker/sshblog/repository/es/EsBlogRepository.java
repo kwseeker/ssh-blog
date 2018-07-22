@@ -15,9 +15,8 @@ public interface EsBlogRepository extends ElasticsearchRepository<EsBlog, String
     Page<EsBlog> findDistinctEsBlogByTitleContainingOrSummaryContainingOrContentContaining(
             String title, String Summary, String content, Pageable pageable);
 
-    Page<EsBlog> findDistinctEsBlogByTitleContainingAndSummaryContainingAndContentContaining(
-            String title, String Summary, String content, Pageable pageable);
+    Page<EsBlog> findDistinctEsBlogBySummaryContainingAndContentContaining(
+            String Summary, String content, Pageable pageable);
 
     EsBlog findByBlogId(Long blogId);
-
 }

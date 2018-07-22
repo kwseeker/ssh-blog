@@ -1,5 +1,6 @@
 package top.kwseeker.sshblog.config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String KEY = "kwseeker.top";
 
     @Autowired
+    @Qualifier("userServiceImpl")
     private UserDetailsService userDetailsService;  //借助JPA访问数据库获取用户详细信息
 
     @Autowired

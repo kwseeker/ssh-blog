@@ -18,7 +18,7 @@ public interface BlogService {
     Blog getBlogById(Long id);
 
     //根据用户名进行分页模糊查询（最新文章）
-//    Page<Blog> listBlogsByTitleVote(User user, String title, Pageable pageable);
+    Page<Blog> listBlogsByTitleVote(User user, String title, Pageable pageable);
 
     //根据用户名进行分页模糊查询（最热文章）
     Page<Blog> listBlogsByTitleVoteAndSort(User user, String title, Pageable pageable);

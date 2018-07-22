@@ -35,7 +35,8 @@ public class MainController {
 	@GetMapping("/index")
 	@ApiOperation(value = "系统主页")
 	public String index() {
-		return "index";
+//		return "index";
+		return "redirect:/blogs";
 	}
 
 	@GetMapping("/login")
